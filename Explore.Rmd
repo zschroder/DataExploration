@@ -4,3 +4,38 @@ author: "Zoe Schroder"
 date: "4/4/2019"
 output: html_document
 ---
+
+This .Rmd file is used to explore my data further. I hope to find some interesting results within my data that inspire new research questions. 
+
+I am using `BigDays.RData` from the pred-casualties repository. Each row in the data frame **BigDays.sfdfT** represents a big tornado day defined as having 10 or more tornadoes on a given convective day (6 AM to 6 AM). Included are the maximum and average values of the atmospheric variables within the hull/ spatial exent of the event. (Convective Available Potential Energy (CAPE), Convective Inhibition (CIN), Helicity (HLCY), U-direction of storm motion (USTM), V-direction of storm motion (VSTM)...calculated by me are Bulk Shear (BS) and Storm Motion (SM)). The **Torn.sfT** data frame has information on every tornado that falls within a big day. This is point data...start of the tornado's genesis location.
+
+Other variables to consider including: Lifted Condesation Levels (LCL), Significant Tornado Parameter (STP), Supercell Composite Parameter (SCP). Additionally varying the parcel level may prove interesting (most unstable, surface-based, mixed layer). 
+
+To start any analysis, load the Big Day data. 
+```{r}
+load("BigDays.RData")
+dim(BigDays.sfdfT)
+dim(Torn.sfT)
+```
+
+Plot histograms of the data
+```{r}
+
+```
+
+################
+## Questions: ##
+################
+
+Is there a monthly variation in the atmospheric environments? 
+November has a similar ATP to May. Are the environments similar in these months? 
+
+What are the land atmospheric interactions that could influence the power on these big days? 
+
+Is the duration of the event influenced by the environments that are present? 
+
+Can you use the atmospheric environments to predict the number of tornadoes that will occur? 
+
+Does the starting hour of the event influence the duration of the event? 
+
+Is the area of the event correlated with the duration of the event? 

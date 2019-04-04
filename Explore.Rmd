@@ -20,7 +20,11 @@ dim(Torn.sfT)
 
 Plot histograms of the data
 ```{r}
-
+BigDays.sfdfT$Duration <- as.numeric(BigDays.sfdfT$Duration)
+hist(BigDays.sfdfT$Duration)
+hist(BigDays.sfdfT$casualties)
+hist(BigDays.sfdfT$nT)
+hist(BigDays.sfdfT$maxEF)
 ```
 
 ################
@@ -30,12 +34,69 @@ Plot histograms of the data
 Is there a monthly variation in the atmospheric environments? 
 November has a similar ATP to May. Are the environments similar in these months? 
 
+```{r}
+library(dplyr)
+month_table <- BigDays.sfdfT %>%
+  group_by(Month) %>% 
+  summarize(avgcape <- mean(maxCAPE),
+            avgcin <- mean(minCIN),
+            avghlcy <- mean(maxHLCY),
+            avgbs <- mean(avgBS),
+            avgsm <- mean(avgSM))
+```
+
+Is there a spatial dependency on the atmospheric variables?
+
+```{r}
+state_table <- Torn.sfT %>%
+  group_by(st) %>% 
+  summarize(avgED<- mean(ED) / 10^9,
+            avgpathwidth <- mean(Length),
+            avgcas <- mean(cas),
+            avghour <- mean(Hour))
+
+state_table 
+```
+
+Pull ED for each state from the Torn.sfT annd plot the average of the max ratings for each state. 
+
+```{r}
+
+```
+
+Plot the total number of each EF ratings by state. MS had XX EF 0, MS had XX EF 1, MS had XX EF2, etc.
+
+```{r}
+
+```
+
 What are the land atmospheric interactions that could influence the power on these big days? 
+
+```{r}
+
+```
 
 Is the duration of the event influenced by the environments that are present? 
 
+```{r}
+
+```
+
 Can you use the atmospheric environments to predict the number of tornadoes that will occur? 
+
+```{r}
+
+```
 
 Does the starting hour of the event influence the duration of the event? 
 
+```{r}
+
+```
+
 Is the area of the event correlated with the duration of the event? 
+
+```{r}
+
+```
+

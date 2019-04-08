@@ -27,6 +27,10 @@ hist(BigDays.sfdfT$nT)
 hist(BigDays.sfdfT$maxEF)
 ```
 
+The duration and the maxEF rating have a similar distribution. Is there a relationship between the number of each damage category and the duration of the event? 
+
+** At AAG DC 2019, I had a conversation with Grady Dixon from Fort Hays in Kansas. We discussed my research and moving forward. We talked about the idea of calculating the potential power of a tornado environment to cause destruction. Then determine how much actually was observed from the Accumulated Tornado Power (ED equations -- power). You would be able to make statements such as "The potential for destruction was XXX however, the outbreak only utilized XX % of the potential power available to it." My question is this: If the potential power is higher, is that directly related to duration of the event on that day? For multi-day events: If the environment has a potential of 1000 Watts and only uses 250 on day one, Will the remaining wattage be used in following days? If the entire potential of the outbreak is not met, does this lead to longer multi-day events? **
+
 ################
 ## Questions: ##
 ################

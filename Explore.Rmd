@@ -44,9 +44,9 @@ How to calculate potential power?:
 This give you units of TerraWatts. 
 ```{r}
 test <- BigDays.sfdfT %>%
-  mutate(PotentialPower = (1.225 * HullArea * (maxCAPE + minCIN) * maxHLCY) / (maxBS * nT) / 10^12)
+  mutate(PotentialPower = (1.225 * HullArea * (maxCAPE + minCIN) * maxHLCY) / (maxBS * nT) / 10^12,
+         MissedPotential = PotentialPower - (GroupTotalED / 10^12))
 ```
-
 
 ################
 ## Questions: ##
@@ -67,8 +67,7 @@ month_table
 ```
 **Average Max CAPE: May, June, and JULY have the highest CAPE values on average. Average Min CIN: April, May, and June have the highest CIN values on average. This could result in `explosive` development that leads to rapidly developing storms. Average Max Helicity: peaks in the winter months (November, December, January, February) as does Average Max Bulk Shear and Average Max Storm Motion. Average Duration (hours): The longest events occur during the winter months which indicates more efficient events during the spring months with more tornadoes occurring in a short amount of time. Additional Comments: 1. Big Days (10+ tornadoes) in the summer months could be driven more by higher CAPE values and CIN values. 2. In the winter months, kinematic variables could be the driver of tornado production on big days.**
 
-Pull ED for each state from the Torn.sfT annd plot the average of the max ratings for each state. 
-
+Create a table of these specific variables by year to see if they change over time. 
 ```{r}
 year_table <- BigDays.sfdfT %>%
   group_by(Year) %>% 
@@ -161,7 +160,7 @@ state_table
 ```
 **The average Tornado Power peaks in AL, AR, GA, LA, MS, OK, and TN. The majority are in the southeastern US. Therefore, tornado power could be larger in the southeastern US on average leading to more destructive tornadoes. There are more casualties in the Southeast on average...see Fricker, Elsner, and Ashley papers on why this is true. ** 
 
-Plot the total number of each EF ratings by state. MS had XX EF 0, MS had XX EF 1, MS had XX EF2, etc.
+Plot the total number of each EF ratings by state. MS had XX EF 0, MS had XX EF 1, MS had XX EF2, etc. Pull ED for each state from the Torn.sfT annd plot the average of the max ratings for each state.
 ```{r}
 
 ```

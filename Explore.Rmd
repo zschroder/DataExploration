@@ -7,6 +7,11 @@ output: html_document
 
 This .Rmd file is used to explore my data further. I hope to find some interesting results within my data that inspire new research questions. 
 
+```{r}
+library(dplyr)
+```
+
+
 I am using `BigDays.RData` from the pred-casualties repository. Each row in the data frame **BigDays.sfdfT** represents a big tornado day defined as having 10 or more tornadoes on a given convective day (6 AM to 6 AM). Included are the maximum and average values of the atmospheric variables within the hull/ spatial exent of the event. (Convective Available Potential Energy (CAPE), Convective Inhibition (CIN), Helicity (HLCY), U-direction of storm motion (USTM), V-direction of storm motion (VSTM)...calculated by me are Bulk Shear (BS) and Storm Motion (SM)). The **Torn.sfT** data frame has information on every tornado that falls within a big day. This is point data...start of the tornado's genesis location.
 
 Other variables to consider including: Lifted Condesation Levels (LCL), Significant Tornado Parameter (STP), Supercell Composite Parameter (SCP). Additionally varying the parcel level may prove interesting (most unstable, surface-based, mixed layer). 
@@ -39,14 +44,15 @@ Is there a monthly variation in the atmospheric environments?
 November has a similar ATP to May. Are the environments similar in these months? 
 
 ```{r}
-library(dplyr)
 month_table <- BigDays.sfdfT %>%
   group_by(Month) %>% 
-  summarize(avgcape <- mean(maxCAPE),
-            avgcin <- mean(minCIN),
-            avghlcy <- mean(maxHLCY),
-            avgbs <- mean(avgBS),
-            avgsm <- mean(avgSM))
+  summarize(avgcape = mean(maxCAPE),
+            avgcin = mean(minCIN),
+            avghlcy = mean(maxHLCY),
+            avgbs = mean(avgBS),
+            avgsm = mean(avgSM), 
+            avgDuration = mean(Duration)/3600)
+month_table
 ```
 
 Is there a spatial dependency on the atmospheric variables?
@@ -54,10 +60,10 @@ Is there a spatial dependency on the atmospheric variables?
 ```{r}
 state_table <- Torn.sfT %>%
   group_by(st) %>% 
-  summarize(avgED<- mean(ED) / 10^9,
-            avgpathwidth <- mean(Length),
-            avgcas <- mean(cas),
-            avghour <- mean(Hour))
+  summarize(avgED = mean(ED) / 10^9,
+            avgpathwidth = mean(Length),
+            avgcas = mean(cas),
+            avghour = mean(Hour))
 
 state_table 
 ```
@@ -65,7 +71,23 @@ state_table
 Pull ED for each state from the Torn.sfT annd plot the average of the max ratings for each state. 
 
 ```{r}
+year_table <- BigDays.sfdfT %>%
+  group_by(Year) %>% 
+  summarize(avgED = mean(GroupTotalED) / 10^12,
+            avgCAPE = mean(maxCAPE),
+            avgCIN = mean(minCIN),
+            avgHLCY = mean(maxHLCY),
+            avgSM = mean(maxSM),
+            avgBS = mean(maxBS),
+            totnT = sum(nT), 
+            totEF0 = sum(n0),
+            totEF1 = sum(n1),
+            totEF2 = sum(n2),
+            totEF3 = sum(n3),
+            totEF4 = sum(n4),
+            totEF5 = sum(n5))
 
+year_table 
 ```
 
 Plot the total number of each EF ratings by state. MS had XX EF 0, MS had XX EF 1, MS had XX EF2, etc.

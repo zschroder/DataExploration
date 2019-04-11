@@ -106,12 +106,39 @@ model2_predictions <- predict(model2)
 cor(model2_predictions, BigDays.sfdfT$Duration)
 ```
 
+```{r}
+median(BigDays.sfdfT$Duration)/3600
+#[1] 8.425
+mean(BigDays.sfdfT$Duration)/3600
+#[1] 9.489443
+hist(BigDays.sfdfT$nT/(BigDays.sfdfT$Duration/3600))
+```
+
+```{r}
+test <- BigDays.sfdfT %>%
+  mutate(tornbyhour = nT/(Duration/3600),
+         tornbyarea = nT/(HullArea/1000000),
+         rate =  nT/(Duration/3600)/(HullArea/1000000))
+
+table1 <- test %>%
+  group_by(Month) %>%
+  summarize(avgrate = mean(rate)*1000, 
+            medrate = median(rate)*1000, 
+            maxrate = max(rate)*1000,
+            minrate = min(rate)*1000, 
+            duravg = mean(Duration/3600), 
+            areaavg = mean(HullArea/1000000),
+            numtorn = sum(nT))
+table1
+```
+
+
 Can you use the atmospheric environments to predict the number of tornadoes that will occur? 
 ```{r}
 model1 <- lmer(nT ~ HullArea + Duration + maxCAPE2 + minCIN2 + maxBS2 + maxSM2 + maxHLCY2 + (1|Month), dat = BigDays.sfdfT )
 summary(model1)
 
-model2 <- lmer(nT ~ HullArea + Duration + maxCAPE2 * maxHLCY2 + maxBS2 + (1|Month), dat = BigDays.sfdfT )
+model2 <- lmer(nT ~ HullArea + Duration + maxCAPE2 * maxHLCY2 + maxBS2 + (1|Month), dat = BigDays.sfdfT)
 summary(model2)
 
 AIC(model1, model2)
@@ -119,6 +146,7 @@ AIC(model1, model2)
 model2_predictions <- predict(model2)
 cor(model2_predictions, BigDays.sfdfT$nT)
 ```
+
 
 Does the starting hour of the event influence the duration of the event? 
 
